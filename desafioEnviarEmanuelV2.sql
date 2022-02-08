@@ -1,39 +1,3 @@
-CREATE TABLE categorias ( 
-id INT NOT NULL AUTO_INCREMENT,
-descricao varchar(100) NOT NULL UNIQUE,
-PRIMARY KEY(id)
-);
-
-CREATE TABLE cursos (
-id INT NOT NULL AUTO_INCREMENT,
-titulo varchar(255) NOT NULL,
-duracao INT NOT NULL,
-categoria_id INT NOT NULL,
-PRIMARY KEY(id)
-);
-
-CREATE TABLE matriculas (
-id INT NOT NULL AUTO_INCREMENT,
-aluno_id INT NOT NULL,
-curso_id INT NOT NULL,
-	PRIMARY KEY (id)
-);
-
-ALTER TABLE matriculas ADD CONSTRAINT matriculas_fk0 FOREIGN KEY (aluno_id) REFERENCES alunos(id);
-ALTER TABLE matriculas ADD CONSTRAINT matriculas_fk1 FOREIGN KEY (curso_id) REFERENCES cursos(id);
-
-ALTER TABLE matriculas ADD CONSTRAINT matriculas_unique UNIQUE (aluno_id, curso_id);
-
-
-INSERT INTO categorias (descricao) VALUES ("Tecnologia");
-INSERT INTO cursos (titulo, duracao, categoria_id) VALUES ("Hackers", 4, 1);
-INSERT INTO alunos (nome, email) VALUES ("Francis Soares de Oliveira", "franciscpd@gmail.com");
-INSERT INTO matriculas (curso_id, aluno_id) VALUES (1, 1);
-
-SELECT alunos.nome, cursos.titulo 
-  FROM matriculas 
-  JOIN alunos ON alunos.id = matriculas.aluno_id 
-  JOIN cursos ON cursos.id = matriculas.curso_id;
 
 select * from departamento
 INSERT INTO departamento (nome, descricao) VALUES ("Monitores", "Dispositivo de saída que transmite informação através da imagem");
@@ -138,13 +102,49 @@ VALUES ("Smartwatch Amazfit Band 5","Relógio Smartwatch Amazfit Band 5 com Alex
 
 select * from cliente
 select * from pedido
+select * from item_pedido
 select * from endereco
-select * from 
+select * from produto
 
 ALTER TABLE pedido
 ADD status_pedido VARCHAR(15) NOT NULL 
 AFTER numero
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
 VALUES ("enviado", "2022-01-02", "5.097", "300", "4.797", "1"); 
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES ("3", "1.699", "5.097", "9", "1")
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-03-05", "14.198", null, "14.198", "1");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "13199", "13199", "13", "2");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "999", "999", "14", "2");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado","2022-02-16", "7299", "50", "7249", "2");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "7299", "7299", "3", "3");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-01-28", "31.260", "600", "30.660", "3");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("6", "5210", "31.260", "15", "4");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-02-02", "2.020", null, "2.020", "4");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "1399", "1399", "1", "5");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "289", "289", "4", "5");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "332", "332", "8", "5");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-03-29", "24.010", "750", "23.260", "5");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("5", "2998", "14990", "12", "6");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("5", "1884", "9020", "10", "6");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-03-30", "1.780", "180", "1600", "5");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("20", "89", "1.780", "6", "7");
 
-
+select * from pedido
+select * from item_pedido
