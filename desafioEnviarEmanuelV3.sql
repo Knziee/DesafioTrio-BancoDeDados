@@ -110,11 +110,11 @@ ALTER TABLE pedido
 ADD status_pedido VARCHAR(15) NOT NULL 
 AFTER numero
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES ("enviado", "2022-01-02", "5.097", "300", "4.797", "1"); 
+VALUES ("enviado", "2022-01-02", "5097", "300", "4797", "1"); 
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
-VALUES ("3", "1.699", "5.097", "9", "1")
+VALUES ("3", "1699", "5097", "9", "1")
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES("enviado", "2022-03-05", "14.198", null, "14.198", "1");
+VALUES("enviado", "2022-03-05", "14198", null, "14198", "1");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "13199", "13199", "13", "2");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
@@ -124,11 +124,11 @@ VALUES("enviado","2022-02-16", "7299", "50", "7249", "2");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "7299", "7299", "3", "3");
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES("enviado", "2022-01-28", "31.260", "600", "30.660", "3");
+VALUES("enviado", "2022-01-28", "31260", "600", "30660", "3");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
-VALUES("6", "5210", "31.260", "15", "4");
+VALUES("6", "5210", "31260", "15", "4");
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES("enviado", "2022-02-02", "2.020", null, "2.020", "4");
+VALUES("enviado", "2022-02-02", "2020", null, "2020", "4");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "1399", "1399", "1", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
@@ -136,15 +136,87 @@ VALUES("1", "289", "289", "4", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "332", "332", "8", "5");
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES("enviado", "2022-03-29", "24.010", "750", "23.260", "5");
+VALUES("enviado", "2022-03-29", "24010", "750", "23260", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("5", "2998", "14990", "12", "6");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("5", "1884", "9020", "10", "6");
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
-VALUES("enviado", "2022-03-30", "1.780", "180", "1600", "5");
+VALUES("enviado", "2022-03-30", "1780", "180", "1600", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
-VALUES("20", "89", "1.780", "6", "7");
+VALUES("20", "89", "1780", "6", "7");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-04-24","220", null, "220", "5")
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "220", "220","18", "8");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-04-14", "6998", "50", "6948", "2");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("2", "3499", "6948", "17", "9");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-05-05", "99", null, "99", "3");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "99", "99", "7", "10");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-05-07", "5893", null, "5893", "8");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "5893", "5893", "2", "11");
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-06-13", "875", "20", "855", "4");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1","875","875","16","12");
 
+
+select * from produto
 select * from pedido
 select * from item_pedido
+
+// info daora //
+select * from produto where nome like '%monitor%';
+
+
+
+
+//respostas//
+
+
+1.
+
+2.
+select count(*) as NumeroDeClientes from cliente;
+select max(id) as NumeroDeClientes from cliente
+
+3.
+select * from produto where preco = (select max(preco) from produto);
+
+4.
+select * from produto where preco = (select min(preco) from produto);
+
+5.
+select * from produto inner join departamento on departamento.codigo = produto.departamento_codigo
+Select nome, departamento_codigo from produto;
+6.
+
+select departamento.nome, count(produto.codigo) as Numero_de_Produtos 
+from produto inner join departamento on produto.departamento_codigo = departamento.codigo
+group by departamento.codigo
+
+// ele conta o numero de produtos em que os codigos de departmaento sao iguais e agrupa eles pelo codigo dos produtos, acho que funcionaria o mesmo se agrupasse por nome
+//perguntar novamente sobre group by ta meio nebuloso, quantos coisas tem q ter no minimo (pedidos)
+
+7.Mostre os dados dos pedidos, incluindo nomes dos clientes e nomes dos produtos que foram vendidos.
+
+select * from pedido inner join cliente on pedido.cliente_id = cliente.id
+group by pedido.numero
+select * from pedido inner join item_pedido on pedido.numero = item_pedido.pedido_numero;
+select * from item_pedido inner join produto on  item_pedido.produto_codigo = produto.codigo;
+
+select * from pedido inner join cliente inner join item_pedido inner join produto on pedido.cliente_id = cliente.id, pedido.numero = item_pedido.pedido_numero;
+group by pedido.numero
+
+
+8.Mostre quantos pedidos foram feitos por mês no ano de 2022 (caso você tenha registros neste ano, senão escolha um ano que você tenha cadastrado - Novamente pense em COUNT e GROUP BY).
+
+9.Mostre quanto foi faturado por mês (leve em conta o valor total de cada pedido - novamente pense em GROUP BY e SUM).
+
+10.Mostre o valor total do estoque por departamento.
