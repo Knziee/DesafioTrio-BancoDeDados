@@ -1,7 +1,73 @@
 
-select * from departamento
+.::// RESPOSTAS //::.
+
+
+1. Ta por ultimo |
+				 v
+
+
+2.
+select count(*) as NumeroDeClientes from cliente;
+
+select max(id) as NumeroDeClientes from cliente
+
+
+3.
+select * from produto where preco = (select max(preco) from produto);
+
+
+4.
+select * from produto where preco = (select min(preco) from produto);
+
+
+5.
+select produto.nome, departamento.nome from produto 
+	inner join departamento on departamento.codigo = produto.departamento_codigo
+
+
+6.
+select departamento.nome, count(produto.codigo) as Numero_de_Produtos 
+		from produto inner join departamento on produto.departamento_codigo = departamento.codigo
+			group by departamento.codigo
+
+
+7.
+select pedido.numero, pedido.status_pedido, pedido.data_pedido, pedido.valor_bruto, pedido.desconto, pedido.valor_final, pedido.cliente_id, cliente.nome as NomeDoCliente, produto.nome as NomeDoProduto
+		from cliente
+			inner join pedido on cliente.id = pedido.cliente_id
+			inner join item_pedido on pedido.numero = item_pedido.pedido_numero
+			inner join produto on produto.codigo = item_pedido.produto_codigo;
+     
+     
+8.
+select year(data_pedido) as ano, month(data_pedido) as mes, count(numero) as pedidos
+	from pedido
+		group by year(data_pedido), month(data_pedido)
+			order by month(data_pedido);
+
+
+9.
+select year(data_pedido) as Ano, month(data_pedido) as Mes, sum(valor_final) as Faturamento
+	from pedido
+		group by year(data_pedido), month(data_pedido)
+			order by month(data_pedido);
+
+
+10.
+select departamento.nome as Nome, sum(produto.estoque*preco) as ValorTotalDoEstoque 
+	from produto inner join departamento on produto.departamento_codigo = departamento.codigo
+		group by departamento.codigo
+        
+        
+        
+						// info daora //
+		select * from produto where nome like '%monitor%';
+
+
+
+1. 
+//inserções de departamentos//
 INSERT INTO departamento (nome, descricao) VALUES ("Monitores", "Dispositivo de saída que transmite informação através da imagem");
-INSERT INTO departamento (nome, descricao) VALUES 
 INSERT INTO departamento (nome, descricao) VALUES ("Teclados", "Dispositivo utilizado para inserir dados");
 INSERT INTO departamento (nome, descricao) VALUES ("Mouses", "Dispositivo utilizado para posicionar o cursos");
 INSERT INTO departamento (nome, descricao) VALUES ("Impressoras 3d", "Dispositivo que imprime objetos em cadas");
@@ -11,8 +77,8 @@ INSERT INTO departamento (nome, descricao) VALUES  ("Realidade virtual", "Dispos
 INSERT INTO departamento ( nome, descricao) VALUES ("Smartphone","Aparelhos de ultimna geração");
 INSERT INTO departamento ( nome, descricao) VALUES ("Smartwatch","smartphone de pulso super personalizado");
 
-select * from cliente
-INSERT INTO cliente (nome, email, senha, cpf) VALUES
+
+//inserções de clientes//
 INSERT INTO cliente (nome, email, senha, cpf) VALUES ("Ozzy Orbourne", "bateater666@gmail.com", "mrcrowley555", "036.429.920-72"); 
 INSERT INTO cliente (nome, email, senha, cpf) VALUES("Lemmy Kilmister", "aceofspades@gmail.com", "gambling123", "493.527.080-24");
 INSERT INTO cliente (nome, email, senha, cpf) VALUES ("John cena", "tadadadann@gmail.com", "wwe123456", "844.571.870-38");
@@ -25,7 +91,8 @@ INSERT INTO cliente (nome, email, senha, cpf) VALUES("Roberto Carlos","oreidampb
 INSERT INTO cliente (nome, email, senha, cpf) VALUES("Maria Betania","betinha@hotmail.com","bethmaria", "897.022.550-15");
 INSERT INTO cliente (nome, email, senha, cpf) VALUES("Amado Batista","batistao@gmail.com","secretaria10", "193.907.860-10");
 
-select * from endereco
+
+//inserções de endereços//
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
 VALUES ("casa", "Rua Antônio Batista de Araújo", "333", "null", "Lagoa azul", "Natal", "RN", "59139-520", "1");
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
@@ -43,9 +110,6 @@ VALUES ("casa", "Avenida Yusaburo Sasazaki", "23", null, "Santo Barion", "Maríl
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
 VALUES("casa", "Rua Júlio Mariano", "54", null, "Taquarí", "Rio Branco", "AC", "69906-420", "5");
 
-select * from endereco
-select * from cliente
- , 
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
 VALUES ("casa", "Avenida Sapopemba", "290", null, "São Mateus", "São Paulo", "SP","03989-000" ,  "6");
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
@@ -57,9 +121,8 @@ VALUES ("casa", "Rua Álvaro Cézar", "965", null, "João Eduardo II", "Rio Bran
 INSERT INTO endereco (tipo, logradouro, numero, complemento, bairro, cidade, estado, cep, cliente_id) 
 VALUES ("casa", "Rua João de Albuquerque", "799", null, "Santa Edwiges", "Arapiraca", "AL","57310-270" ,  "10");
 
-select * from produto
-select * from departamento
 
+//inserções de produtos//
 INSERT INTO produto (nome, descricao, preco, estoque, link_foto, departamento_codigo)
 VALUES ("Monitor Ultra wide LG 29", "Full HD, HDMI, VESA, Ajuste de Ângulo, HDR 10, 99% sRGB", "1.399", "4", "https://images.kabum.com.br/produtos/fotos/157553/monitor-lg-led-29-ultrawide-ips-hdmi-displayport-hdr-com-vesa-e-alto-falante-amd-radeon-freesync-29wl500_1620660433_gg.jpg", "1");
 UPDATE produto set preco = 1399 where codigo = 1
@@ -99,16 +162,12 @@ VALUES ("Apple Watch","Apple Relógio série 7 GPS, 45 mm caixa de alumínio Mid
 INSERT INTO produto (nome, descricao, preco, estoque, link_foto, departamento_codigo)
 VALUES ("Smartwatch Amazfit Band 5","Relógio Smartwatch Amazfit Band 5 com Alexa e Oximetro","220","54"," https://www.amazon.com.br/Rel%C3%B3gio-Smartwatch-Amazfit-Band-Oximetro/dp/B08DKWSVZG/ref=asc_df_B08DKWSVZG/?tag=googleshopp00-20&linkCode=df0&hvadid=379738801152&hvpos=&hvnetw=g&hvrand=14292876010104332009&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcm", "8");
 
-
-select * from cliente
-select * from pedido
-select * from item_pedido
-select * from endereco
-select * from produto
-
-ALTER TABLE pedido
-ADD status_pedido VARCHAR(15) NOT NULL 
-AFTER numero
+//inserções de pedidos e items_pedidos, alteração de status para status_pedido por se tratar de palavra aparentemente reservada e inclusão de mais caracteres no VARCHAR//
+	
+    ALTER TABLE pedido
+	ADD status_pedido VARCHAR(15) NOT NULL 
+	AFTER numero
+    
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
 VALUES ("enviado", "2022-01-02", "5097", "300", "4797", "1"); 
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
@@ -132,7 +191,7 @@ VALUES("enviado", "2022-02-02", "2020", null, "2020", "4");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "1399", "1399", "1", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
-VALUES("1", "289", "289", "4", "5");
+VALUES("1", "279", "279", "4", "5");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1", "332", "332", "8", "5");
 INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
@@ -166,57 +225,71 @@ VALUES("enviado", "2022-06-13", "875", "20", "855", "4");
 INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
 VALUES("1","875","875","16","12");
 
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-06-27", "6998", "198", "6800", "8");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("2", "3499", "6998", "17", "13");
 
-select * from produto
-select * from pedido
-select * from item_pedido
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-06-15", "880", "30", "850", "10");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("4", "220", "880", "18", "14");
 
-// info daora //
-select * from produto where nome like '%monitor%';
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-07-11", "5210", "0", "5210", "9");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "5210", "5210", "15", "15");
 
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-07-11", "198", "18", "180", "9");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("2", "99", "198", "7", "16");
 
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-08-12", "3398", "98", "3300", "10");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("2", "1699", "3398", "9", "17");
 
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-08-25", "13199", "99", "13100", "8");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "13199", "13199", "13", "18");
 
-//respostas//
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-09-03", "7299", "199", "7100", "7");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "7299", "7299", "3", "19");
 
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-09-22", "445", "0", "445", "9");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("5", "89", "445", "6", "20");
 
-1.
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-10-02", "1540", "40", "1500", "10");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("7", "220", "1540", "18", "21");
 
-2.
-select count(*) as NumeroDeClientes from cliente;
-select max(id) as NumeroDeClientes from cliente
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-10-17", "5996", "196", "5800", "3");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("2", "2998", "5996", "12", "22");
 
-3.
-select * from produto where preco = (select max(preco) from produto);
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-11-16", "15630", "0", "15630", "7");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("3", "5210", "15630", "15", "23");
 
-4.
-select * from produto where preco = (select min(preco) from produto);
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-12-01", "7299", "99", "7200", "6");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "7299", "7299", "3", "24");
 
-5.
-select * from produto inner join departamento on departamento.codigo = produto.departamento_codigo
-Select nome, departamento_codigo from produto;
-6.
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-12-01", "1369", "169", "1200", "6");
+INSERT INTO item_pedido (quantidade, valor_unitario, valor_total, produto_codigo, pedido_numero)
+VALUES("1", "1369", "1369", "5", "25");
 
-select departamento.nome, count(produto.codigo) as Numero_de_Produtos 
-from produto inner join departamento on produto.departamento_codigo = departamento.codigo
-group by departamento.codigo
-
-// ele conta o numero de produtos em que os codigos de departmaento sao iguais e agrupa eles pelo codigo dos produtos, acho que funcionaria o mesmo se agrupasse por nome
-//perguntar novamente sobre group by ta meio nebuloso, quantos coisas tem q ter no minimo (pedidos)
-
-7.Mostre os dados dos pedidos, incluindo nomes dos clientes e nomes dos produtos que foram vendidos.
-
-select * from pedido inner join cliente on pedido.cliente_id = cliente.id
-group by pedido.numero
-select * from pedido inner join item_pedido on pedido.numero = item_pedido.pedido_numero;
-select * from item_pedido inner join produto on  item_pedido.produto_codigo = produto.codigo;
-
-select * from pedido inner join cliente inner join item_pedido inner join produto on pedido.cliente_id = cliente.id, pedido.numero = item_pedido.pedido_numero;
-group by pedido.numero
-
-
-8.Mostre quantos pedidos foram feitos por mês no ano de 2022 (caso você tenha registros neste ano, senão escolha um ano que você tenha cadastrado - Novamente pense em COUNT e GROUP BY).
-
-9.Mostre quanto foi faturado por mês (leve em conta o valor total de cada pedido - novamente pense em GROUP BY e SUM).
-
-10.Mostre o valor total do estoque por departamento.
+INSERT INTO pedido (status_pedido, data_pedido, valor_bruto, desconto, valor_final, cliente_id)
+VALUES("enviado", "2022-12-23", "7000", "0", "7000", "8");
+  
